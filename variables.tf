@@ -187,11 +187,9 @@ variable "http_tokens" {
   description = "Determines if a signed token is required or not. Valid values: optional or required."
 }
 
-http_put_response_hop_limit 
-
-variable "http_tokens" {
+variable "http_put_response_hop_limit" {
   type        = number
-  default     = 1
+  default     = null
   description = "An integer from 1 through 64. The desired HTTP PUT response hop limit for instance metadata requests. The larger the number, the further the instance metadata requests can travel."
 }
 ##################
@@ -336,7 +334,7 @@ variable "instance_types_filters_enable" {
 
 variable "images" {
   type = list(object({
-    image_id   = string
+    image_id = string
   }))
   default     = null
   description = "Array of objects (Image object, containing the id of the image used to launch instances.)"
