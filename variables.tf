@@ -180,6 +180,22 @@ variable "delete_nodes" {
 }
 ##################
 
+## instanece_metadata_options ##
+variable "http_tokens" {
+  type        = string
+  default     = "required"
+  description = "Determines if a signed token is required or not. Valid values: optional or required."
+}
+
+http_put_response_hop_limit 
+
+variable "http_tokens" {
+  type        = number
+  default     = 1
+  description = "An integer from 1 through 64. The desired HTTP PUT response hop limit for instance metadata requests. The larger the number, the further the instance metadata requests can travel."
+}
+##################
+
 ## scheduling_shutdown_hours.tf ##
 variable "scheduling_task" {
   type = list(object({

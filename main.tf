@@ -56,16 +56,16 @@ resource "spotinst_ocean_aws_launch_spec" "nodegroup" {
     for_each = var.block_device_mappings
     content {
       device_name = block_device_mappings.value.device_name
-      no_device   = try(block_device_mappings.value.no_device,null)
+      no_device   = try(block_device_mappings.value.no_device, null)
       ebs {
-        delete_on_termination = try(block_device_mappings.value.delete_on_termination,null)
-        encrypted             = try(block_device_mappings.value.encrypted,null)
-        iops                  = try(block_device_mappings.value.iops,null)
-        kms_key_id            = try(block_device_mappings.value.kms_key_id,null)
-        snapshot_id           = try(block_device_mappings.value.snapshot_id,null)
-        volume_type           = try(block_device_mappings.value.volume_type,null)
-        volume_size           = try(block_device_mappings.value.volume_size,null)
-        throughput            = try(block_device_mappings.value.throughput,null)
+        delete_on_termination = try(block_device_mappings.value.delete_on_termination, null)
+        encrypted             = try(block_device_mappings.value.encrypted, null)
+        iops                  = try(block_device_mappings.value.iops, null)
+        kms_key_id            = try(block_device_mappings.value.kms_key_id, null)
+        snapshot_id           = try(block_device_mappings.value.snapshot_id, null)
+        volume_type           = try(block_device_mappings.value.volume_type, null)
+        volume_size           = try(block_device_mappings.value.volume_size, null)
+        throughput            = try(block_device_mappings.value.throughput, null)
         dynamic "dynamic_volume_size" {
           for_each = var.dynamic_volume_size != null ? [var.dynamic_volume_size] : []
           content {
@@ -78,7 +78,7 @@ resource "spotinst_ocean_aws_launch_spec" "nodegroup" {
     }
   }
 
-  ephemeral_storage{
+  ephemeral_storage {
     ephemeral_storage_device_name = var.ephemeral_storage_device_name
   }
 
@@ -108,9 +108,13 @@ resource "spotinst_ocean_aws_launch_spec" "nodegroup" {
 
   delete_options {
     force_delete = var.force_delete
-    delete_nodes=var.delete_nodes
+    delete_nodes = var.delete_nodes
   }
 
+  instance_metadata_options {
+    http_tokens                 = var.http_tokens
+    http_put_response_hop_limit = var.http_put_response_hop_limit
+  }
 
   dynamic "scheduling_task" {
     for_each = var.scheduling_task != null ? var.scheduling_task : []
@@ -145,31 +149,31 @@ resource "spotinst_ocean_aws_launch_spec" "nodegroup" {
   dynamic "instance_types_filters" {
     for_each = var.instance_types_filters_enable == true ? [var.instance_types_filters_enable] : []
     content {
-      categories                =   var.instance_types_filters_categories
-      disk_types                =   var.instance_types_filters_disk_types
-      exclude_families          =   var.instance_types_filters_exclude_families
-      exclude_metal             =   var.instance_types_filters_exclude_metal
-      hypervisor                =   var.instance_types_filters_hypervisor
-      include_families          =   var.instance_types_filters_include_families
-      is_ena_supported          =   var.instance_types_filters_is_ena_supported
-      max_gpu                   =   var.instance_types_filters_max_gpu
-      min_gpu                   =   var.instance_types_filters_min_gpu
-      max_memory_gib            =   var.instance_types_filters_max_memory_gib
-      max_network_performance   =   var.instance_types_filters_max_network_performance
-      max_vcpu                  =   var.instance_types_filters_max_vcpu
-      min_enis                  =   var.instance_types_filters_min_enis
-      min_memory_gib            =   var.instance_types_filters_min_memory_gib
-      min_network_performance   =   var.instance_types_filters_min_network_performance
-      min_vcpu                  =   var.instance_types_filters_min_vcpu
-      root_device_types         =   var.instance_types_filters_root_device_types
-      virtualization_types      =   var.instance_types_filters_virtualization_types
+      categories              = var.instance_types_filters_categories
+      disk_types              = var.instance_types_filters_disk_types
+      exclude_families        = var.instance_types_filters_exclude_families
+      exclude_metal           = var.instance_types_filters_exclude_metal
+      hypervisor              = var.instance_types_filters_hypervisor
+      include_families        = var.instance_types_filters_include_families
+      is_ena_supported        = var.instance_types_filters_is_ena_supported
+      max_gpu                 = var.instance_types_filters_max_gpu
+      min_gpu                 = var.instance_types_filters_min_gpu
+      max_memory_gib          = var.instance_types_filters_max_memory_gib
+      max_network_performance = var.instance_types_filters_max_network_performance
+      max_vcpu                = var.instance_types_filters_max_vcpu
+      min_enis                = var.instance_types_filters_min_enis
+      min_memory_gib          = var.instance_types_filters_min_memory_gib
+      min_network_performance = var.instance_types_filters_min_network_performance
+      min_vcpu                = var.instance_types_filters_min_vcpu
+      root_device_types       = var.instance_types_filters_root_device_types
+      virtualization_types    = var.instance_types_filters_virtualization_types
     }
   }
 
   dynamic "images" {
     for_each = var.images == null ? [] : var.images
     content {
-      image_id   = images.value["image_id"]
+      image_id = images.value["image_id"]
     }
   }
 }
